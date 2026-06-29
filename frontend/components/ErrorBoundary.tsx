@@ -33,18 +33,20 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       if (this.props.fallback) return this.props.fallback;
       return (
-        <div className="surface p-6 text-rose-300">
-          <h3 className="text-base font-semibold text-rose-200">
-            Something went wrong rendering this panel.
-          </h3>
-          <p className="mt-2 text-sm text-rose-300/80">{this.state.message}</p>
-          <button
-            type="button"
-            onClick={this.reset}
-            className="mt-4 rounded-md border border-rose-500/40 px-3 py-1 text-xs text-rose-200 hover:bg-rose-500/10"
-          >
-            Try again
-          </button>
+        <div className="mx-auto max-w-7xl px-8 py-16">
+          <div className="border border-rose-200 bg-rose-50 p-6">
+            <h3 className="text-base font-semibold text-rose-700">
+              Something went wrong rendering this panel.
+            </h3>
+            <p className="mt-2 text-sm text-rose-600">{this.state.message}</p>
+            <button
+              type="button"
+              onClick={this.reset}
+              className="mt-4 border border-rose-300 bg-white px-4 py-1.5 text-xs font-medium text-rose-700 transition hover:bg-rose-100"
+            >
+              Try again
+            </button>
+          </div>
         </div>
       );
     }

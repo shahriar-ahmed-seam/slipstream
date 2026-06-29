@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 export default function MetricsPage() {
   return (
-    <main className="space-y-6">
+    <main>
       <MetricsDashboard />
     </main>
   );

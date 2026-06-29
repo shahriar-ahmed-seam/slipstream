@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
 body {
-  background: radial-gradient(circle at 20% 0%, #0b1234 0%, #05060b 60%) fixed;
-  color: #e5e7eb;
+  background: #f6f7f9;
+  color: #0b0f19;
   min-height: 100vh;
 }
 
@@ -17,11 +17,16 @@ body {
   box-sizing: border-box;
 }
 
+/* Flat, sharp surface — the core building block of the UI. */
 .surface {
-  background: linear-gradient(180deg, rgba(17, 21, 42, 0.85), rgba(11, 14, 26, 0.85));
-  border: 1px solid #1b2138;
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
+  background: #ffffff;
+  border: 1px solid #e6e8ec;
+  border-radius: 0;
+}
+
+/* Hairline divider used inside surfaces. */
+.hairline {
+  border-color: #e6e8ec;
 }
 
 .scroll-hide::-webkit-scrollbar {

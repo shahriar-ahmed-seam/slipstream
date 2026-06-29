@@ -18,19 +18,21 @@ function LatencyHistogramImpl({ buckets, unit = "ms" }: Props) {
   }, [buckets]);
 
   return (
-    <div className="surface p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-slate-400">
-          Latency Distribution
+    <div className="surface flex h-full flex-col p-6">
+      <div className="mb-4 flex items-center justify-between">
+        <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+          Latency distribution
         </p>
-        <p className="text-xs text-slate-500">{buckets.length} buckets</p>
+        <p className="text-[11px] tabular-nums text-zinc-400">
+          {buckets.length} buckets
+        </p>
       </div>
-      <div className="flex h-40 items-end gap-1">
+      <div className="flex min-h-[180px] flex-1 items-end gap-px">
         {buckets.length === 0 ? (
-          <p className="m-auto text-xs text-slate-500">No samples yet.</p>
+          <p className="m-auto text-xs text-zinc-400">No samples yet.</p>
         ) : (
           buckets.map((b, i) => {
-            const h = max === 0 ? 0 : (b.count / max) * 100;
+            const h = max === 0 ? 0 : Math.max(2, (b.count / max) * 100);
             return (
               <div
                 key={`${b.lower}-${b.upper}-${i}`}
@@ -38,17 +40,20 @@ function LatencyHistogramImpl({ buckets, unit = "ms" }: Props) {
                 title={`${formatNumber(b.lower)}–${formatNumber(b.upper)} ${unit}: ${b.count}`}
               >
                 <div
-                  className="w-full rounded-t bg-gradient-to-t from-violet-500/40 to-violet-300/80 transition-all group-hover:from-violet-500/60 group-hover:to-violet-200"
+                  className="w-full bg-indigo-500/80 transition-colors group-hover:bg-indigo-600"
                   style={{ height: `${h}%` }}
                 />
-                <span className="mt-1 text-[10px] text-slate-500">
-                  {formatNumber(b.lower)}
-                </span>
               </div>
             );
           })
         )}
       </div>
+      {buckets.length > 0 ? (
+        <div className="mt-3 flex items-center justify-between text-[10px] tabular-nums text-zinc-400">
+          <span>{formatNumber(buckets[0]?.lower ?? 0)}</span>
+          <span>{formatNumber(buckets[buckets.length - 1]?.upper ?? 0)} {unit}</span>
+        </div>
+      ) : null}
     </div>
   );
 }
