@@ -1,0 +1,43 @@
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editors ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Node / Next.js ---
+node_modules/
+.next/
+out/
+dist/
+build/
+coverage/
+.npm
+.pnpm-store
+*.tsbuildinfo
+next-env.d.ts.bak
+
+# --- Go ---
+bin/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# --- Env ---
+.env
+.env.local
+.env.*.local
+
+# --- Logs ---
+*.log
+*.out.log
+*.err.log
