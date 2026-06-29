@@ -12,11 +12,11 @@ import (
 
 // Handler exposes HTTP routes for the metrics feature.
 type Handler struct {
-	log        *logger.Logger
-	svc        *Service
-	ingestPath string
+	log         *logger.Logger
+	svc         *Service
+	ingestPath  string
 	metricsPath string
-	streamPath string
+	streamPath  string
 }
 
 // NewHandler constructs an HTTP handler bound to the supplied paths.

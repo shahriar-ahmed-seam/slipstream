@@ -12,10 +12,10 @@ import (
 
 // WSHandler provides a WebSocket transport for the snapshot stream.
 type WSHandler struct {
-	log   *logger.Logger
-	svc   *Service
-	up    websocket.Upgrader
-	path  string
+	log  *logger.Logger
+	svc  *Service
+	up   websocket.Upgrader
+	path string
 }
 
 // NewWSHandler creates a WebSocket handler bound to the supplied path.

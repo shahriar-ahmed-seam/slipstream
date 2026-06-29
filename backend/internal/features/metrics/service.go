@@ -13,10 +13,10 @@ import (
 // Service orchestrates the worker pool, repository, and stream
 // subscribers. It is the application-layer entry point for the feature.
 type Service struct {
-	log     *logger.Logger
-	repo    *Repository
-	pool    *WorkerPool
-	window  time.Duration
+	log    *logger.Logger
+	repo   *Repository
+	pool   *WorkerPool
+	window time.Duration
 
 	subsMu sync.RWMutex
 	subs   map[chan Snapshot]struct{}

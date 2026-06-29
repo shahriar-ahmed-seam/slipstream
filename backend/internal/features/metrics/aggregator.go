@@ -16,13 +16,13 @@ type PerMetricState struct {
 	binCount   int
 	percentile float64
 
-	values    []float64
-	times     []time.Time
-	errs      []bool
-	buckets   []uint64
-	loBound   float64
-	hiBound   float64
-	p2        *P2Quantile
+	values  []float64
+	times   []time.Time
+	errs    []bool
+	buckets []uint64
+	loBound float64
+	hiBound float64
+	p2      *P2Quantile
 }
 
 // NewPerMetricState constructs an empty state object sized for the

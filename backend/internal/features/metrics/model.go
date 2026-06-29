@@ -43,11 +43,11 @@ func (e *Event) Validate(now time.Time) error {
 
 // Snapshot is the aggregate result computed over the active window.
 type Snapshot struct {
-	GeneratedAt    time.Time         `json:"generatedAt"`
-	WindowSeconds  float64           `json:"windowSeconds"`
-	TotalEvents    uint64            `json:"totalEvents"`
-	ByMetric       map[string]MetricStats `json:"byMetric"`
-	Global         MetricStats       `json:"global"`
+	GeneratedAt   time.Time              `json:"generatedAt"`
+	WindowSeconds float64                `json:"windowSeconds"`
+	TotalEvents   uint64                 `json:"totalEvents"`
+	ByMetric      map[string]MetricStats `json:"byMetric"`
+	Global        MetricStats            `json:"global"`
 }
 
 // MetricStats is a dense statistical summary of one metric stream.

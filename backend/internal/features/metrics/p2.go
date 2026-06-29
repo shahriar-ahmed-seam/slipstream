@@ -3,8 +3,8 @@ package metrics
 // P2Quantile implements the P² algorithm for online quantile estimation
 // with O(1) time and O(1) memory per update. See:
 //
-//   Jain, R. and Chlamtac, I. (1985). The P² algorithm for dynamic
-//   calculation of quantiles and histograms without storing observations.
+//	Jain, R. and Chlamtac, I. (1985). The P² algorithm for dynamic
+//	calculation of quantiles and histograms without storing observations.
 //
 // The estimator is approximate; it converges to the true quantile after
 // the first five samples and tracks it thereafter.
@@ -14,7 +14,7 @@ type P2Quantile struct {
 	q     [5]float64 // marker heights (sorted)
 	ns    [5]int     // desired marker positions
 	count int
-	stage int        // number of init samples seen
+	stage int // number of init samples seen
 	init  [5]float64
 }
 
