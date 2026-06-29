@@ -12,10 +12,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/eventdriven/metrics/internal/features/metrics"
-	"github.com/eventdriven/metrics/internal/platform/config"
-	"github.com/eventdriven/metrics/internal/platform/httpserver"
-	"github.com/eventdriven/metrics/internal/platform/logger"
+	"slipstream/internal/features/metrics"
+	"slipstream/internal/platform/config"
+	"slipstream/internal/platform/httpserver"
+	"slipstream/internal/platform/logger"
 )
 
 func main() {

@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/eventdriven/metrics/internal/platform/logger"
 	"github.com/gorilla/websocket"
+	"slipstream/internal/platform/logger"
 )
 
 // WSHandler provides a WebSocket transport for the snapshot stream.

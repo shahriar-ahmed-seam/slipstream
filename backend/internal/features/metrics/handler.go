@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/eventdriven/metrics/internal/platform/logger"
+	"slipstream/internal/platform/logger"
 )
 
 // Handler exposes HTTP routes for the metrics feature.

@@ -8,7 +8,7 @@ import (
 	"runtime/debug"
 	"time"
 
-	"github.com/eventdriven/metrics/internal/platform/logger"
+	"slipstream/internal/platform/logger"
 )
 
 // Chain composes multiple middleware functions around a terminal handler.

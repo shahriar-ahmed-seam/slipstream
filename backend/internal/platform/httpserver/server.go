@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/eventdriven/metrics/internal/platform/logger"
+	"slipstream/internal/platform/logger"
 )
 
 // Server wraps an http.Server with a logger and a shutdown timeout.

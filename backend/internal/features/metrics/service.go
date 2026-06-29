@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/eventdriven/metrics/internal/platform/logger"
+	"slipstream/internal/platform/logger"
 )
 
 // Service orchestrates the worker pool, repository, and stream

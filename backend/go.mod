@@ -1,4 +1,4 @@
-module github.com/eventdriven/metrics
+module slipstream
 
 go 1.22
 

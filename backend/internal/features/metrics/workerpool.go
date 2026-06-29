@@ -5,7 +5,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/eventdriven/metrics/internal/platform/logger"
+	"slipstream/internal/platform/logger"
 )
 
 // Job is a unit of work submitted to the worker pool. Each Job wraps a

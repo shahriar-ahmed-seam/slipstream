@@ -1,11 +1,15 @@
-# Event-Driven Metrics Dashboard
+# Slipstream
 
-Real-time ingestion and visualization of high-throughput time-series events.
-A **Go** microservice ingests events through a worker pool, aggregates them over a
-sliding window with online statistics (mean, variance, percentiles, histograms),
-and streams snapshots to a **Next.js / TypeScript** dashboard over Server-Sent Events.
+> Real-time metrics in the slipstream of your event firehose.
+
+Slipstream ingests a high-throughput stream of time-series events and turns it into
+live, actionable metrics. A **Go** engine consumes events through a worker pool,
+aggregates them over a sliding window with online statistics (mean, variance,
+percentiles, histograms, error rate), and streams snapshots to a **Next.js /
+TypeScript** dashboard over Server-Sent Events.
 
 <p>
+  <img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white">
   <img alt="Go" src="https://img.shields.io/badge/Go-1.22+-00ADD8?logo=go&logoColor=white">
   <img alt="Next.js" src="https://img.shields.io/badge/Next.js-14-000000?logo=next.js&logoColor=white">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white">
@@ -13,9 +17,10 @@ and streams snapshots to a **Next.js / TypeScript** dashboard over Server-Sent E
 </p>
 
 ```
-event-driven/
-├── backend/        # Go microservice (sliding window + worker pool + SSE/WS)
+slipstream/
+├── backend/        # Go engine (sliding window + worker pool + SSE/WS)
 ├── frontend/       # Next.js 14 / React 18 dashboard (App Router, strict TS)
+├── .github/        # CI workflow
 ├── LICENSE
 └── README.md
 ```
@@ -26,7 +31,7 @@ event-driven/
 
 ```
    ┌──────────────────┐   POST /api/events    ┌────────────────────────┐
-   │  Event Producers │ ───────────────────▶  │   Go Metrics Service   │
+   │  Event Producers │ ───────────────────▶  │    Slipstream Engine  |
    └──────────────────┘                       │  worker pool → repo    │
                                               │  sliding window + P²   │
                                               └──────────┬─────────────┘
@@ -35,7 +40,7 @@ event-driven/
                                                          │ JSON /api/metrics
                                                          ▼
                                               ┌────────────────────────┐
-                                              │  Next.js Dashboard     │
+                                              │  Slipstream Dashboard  │
                                               │  (React 18, TS strict) │
                                               └────────────────────────┘
 ```
@@ -65,12 +70,12 @@ Eviction is amortized `O(1)`: events are appended in timestamp order, so expired
 samples are dropped from the head whenever `timestamp(head) < t - w`. An equi-width
 histogram bucketizes the window for the latency distribution chart.
 
-| Operation     | Time (per event)              | Space (per metric) |
-|---------------|-------------------------------|--------------------|
-| `Add(event)`  | `O(b)` rebuild of `b` buckets | `O(w)`             |
-| `Snapshot()`  | `O(k·w)` (k active metrics)   | `O(w + b)`         |
-| Eviction head | `O(1)` amortized              | —                  |
-| P² quantile   | `O(1)`                        | `O(1)`             |
+| Operation      | Time (per event)                  | Space (per metric) |
+| -------------- | --------------------------------- | ------------------ |
+| `Add(event)` | `O(b)` rebuild of `b` buckets | `O(w)`           |
+| `Snapshot()` | `O(k·w)` (k active metrics)    | `O(w + b)`       |
+| Eviction head  | `O(1)` amortized                | —                 |
+| P² quantile   | `O(1)`                          | `O(1)`           |
 
 ### Concurrency model
 
@@ -94,19 +99,19 @@ histogram bucketizes the window for the latency distribution chart.
 
 ### Configuration (environment variables)
 
-| Variable                   | Default        | Description                       |
-|----------------------------|----------------|-----------------------------------|
-| `METRICS_HTTP_ADDR`        | `:8080`        | HTTP listen address               |
-| `METRICS_INGEST_PATH`      | `/api/events`  | Event ingestion path              |
-| `METRICS_HTTP_PATH`        | `/api/metrics` | Snapshot path                     |
-| `METRICS_STREAM_PATH`      | `/api/stream`  | SSE stream path                   |
-| `METRICS_WINDOW`           | `60s`          | Sliding window duration           |
-| `METRICS_WORKERS`          | `8`            | Worker pool size                  |
-| `METRICS_INGEST_BUFFER`    | `4096`         | Inbound job queue size            |
-| `METRICS_STREAM_BUFFER`    | `1024`         | Per-subscriber channel buffer     |
-| `METRICS_HISTOGRAM_BINS`   | `20`           | Histogram bucket count            |
-| `METRICS_PERCENTILE`       | `0.95`         | Target percentile, in `(0,1)`     |
-| `METRICS_SHUTDOWN_TIMEOUT` | `10s`          | Graceful shutdown deadline        |
+| Variable                     | Default          | Description                    |
+| ---------------------------- | ---------------- | ------------------------------ |
+| `METRICS_HTTP_ADDR`        | `:8080`        | HTTP listen address            |
+| `METRICS_INGEST_PATH`      | `/api/events`  | Event ingestion path           |
+| `METRICS_HTTP_PATH`        | `/api/metrics` | Snapshot path                  |
+| `METRICS_STREAM_PATH`      | `/api/stream`  | SSE stream path                |
+| `METRICS_WINDOW`           | `60s`          | Sliding window duration        |
+| `METRICS_WORKERS`          | `8`            | Worker pool size               |
+| `METRICS_INGEST_BUFFER`    | `4096`         | Inbound job queue size         |
+| `METRICS_STREAM_BUFFER`    | `1024`         | Per-subscriber channel buffer  |
+| `METRICS_HISTOGRAM_BINS`   | `20`           | Histogram bucket count         |
+| `METRICS_PERCENTILE`       | `0.95`         | Target percentile, in`(0,1)` |
+| `METRICS_SHUTDOWN_TIMEOUT` | `10s`          | Graceful shutdown deadline     |
 
 ### Run
 
@@ -120,13 +125,13 @@ make build        # → bin/metrics-server, bin/metrics-seed
 
 ### HTTP API
 
-| Method | Path           | Notes                                            |
-|--------|----------------|--------------------------------------------------|
-| GET    | `/api/healthz` | `{"status":"ok","accepted":N,"rejected":N}`      |
-| POST   | `/api/events`  | `{"events":[...]}` → `202 {"accepted":N,...}`    |
-| GET    | `/api/metrics` | Full `Snapshot` JSON                             |
+| Method | Path             | Notes                                                |
+| ------ | ---------------- | ---------------------------------------------------- |
+| GET    | `/api/healthz` | `{"status":"ok","accepted":N,"rejected":N}`        |
+| POST   | `/api/events`  | `{"events":[...]}` → `202 {"accepted":N,...}`   |
+| GET    | `/api/metrics` | Full`Snapshot` JSON                                |
 | GET    | `/api/stream`  | `text/event-stream` SSE; emits `event: snapshot` |
-| GET    | `/api/ws`      | WebSocket upgrade; same payload as SSE           |
+| GET    | `/api/ws`      | WebSocket upgrade; same payload as SSE               |
 
 ### Event shape
 

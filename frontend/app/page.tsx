@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <main className="surface p-8">
-      <h2 className="text-xl font-semibold text-white">Welcome</h2>
+      <h2 className="text-xl font-semibold text-white">Welcome to Slipstream</h2>
       <p className="mt-2 max-w-2xl text-sm text-slate-300">
-        This is the operational dashboard for the Event-Driven Metrics microservice. The
-        backend aggregates time-series events over a sliding window and pushes snapshots
+        Slipstream rides the slipstream of your event firehose: the Go engine aggregates
+        time-series events over a sliding window and pushes snapshots to this dashboard
         via Server-Sent Events.
       </p>
       <Link

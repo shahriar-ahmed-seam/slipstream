@@ -4,9 +4,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Event-Driven Metrics Dashboard",
+  title: "Slipstream — Real-Time Metrics",
   description:
-    "Real-time, production-grade visualization for high-throughput event-driven metrics.",
+    "Real-time, production-grade visualization for high-throughput event streams.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -17,10 +17,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <header className="mb-8 flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-semibold tracking-tight text-white">
-                Event-Driven Metrics
+                Slipstream
               </h1>
               <p className="text-sm text-slate-400">
-                Sliding-window aggregates streamed in real time from the Go microservice.
+                Sliding-window metrics streamed in real time from the Go engine.
               </p>
             </div>
             <div className="rounded-full border border-ink-700 bg-ink-900 px-3 py-1 text-xs text-slate-400">
